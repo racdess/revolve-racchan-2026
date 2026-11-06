@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revolve Pizza Oven | PM & UX Case Study</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Dark Mode Script -->
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class', 
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            primary: '#346d62', /* Revolve Dark Teal */
+                            secondary: '#dba554', /* Revolve Gold */
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { overflow-x: hidden; }
+        
+        /* Ambient Glowing Orbs Background */
+        @keyframes drift {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(40px, -60px) scale(1.1); }
+            66% { transform: translate(-30px, 30px) scale(0.9); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+        .orb-1 { animation: drift 15s infinite alternate ease-in-out; }
+        .orb-2 { animation: drift 18s infinite alternate-reverse ease-in-out; }
+        .orb-3 { animation: drift 22s infinite alternate ease-in-out; }
+
+        /* Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        /* Premium Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(219, 165, 84, 0.4); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(219, 165, 84, 0.8); }
+
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-secondary selection:text-white relative bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-500">
+
+    <!-- Go Back Button (Top Left) -->
+    <a href="https://portfolio-racchan.netlify.app" class="fixed top-4 left-4 md:top-8 md:left-8 z-40 p-3 md:p-4 rounded-full bg-white dark:bg-slate-800 shadow-xl border border-slate-200 dark:border-slate-700 hover:scale-110 transition-transform flex items-center justify-center w-11 h-11 md:w-12 md:h-12 group text-slate-800 dark:text-slate-200">
+        <i class="fa-solid fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
+    </a>
+
+    <!-- Ambient Glowing Orbs Background -->
+    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none transition-opacity duration-500">
+        <div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-brand-primary/20 dark:bg-brand-primary/15 rounded-full blur-[120px] orb-1 mix-blend-multiply dark:mix-blend-screen"></div>
+        <div class="absolute bottom-[10%] right-[-10%] w-[45vw] h-[45vw] bg-brand-secondary/20 dark:bg-brand-secondary/15 rounded-full blur-[120px] orb-2 mix-blend-multiply dark:mix-blend-screen"></div>
+        <div class="absolute top-[30%] left-[50%] w-[40vw] h-[40vw] bg-brand-primary/10 dark:bg-brand-primary/5 rounded-full blur-[120px] orb-3 mix-blend-multiply dark:mix-blend-screen"></div>
+    </div>
+    <!-- Theme Toggle Button (Moved to Top Right) -->
+    <button onclick="toggleTheme()" class="fixed top-6 right-6 z-50 p-4 rounded-full bg-white dark:bg-slate-800 shadow-xl border border-slate-200 dark:border-slate-700 hover:scale-110 transition-transform flex items-center justify-center w-12 h-12 group">
+        <i class="fa-solid fa-moon text-slate-800 text-lg block dark:hidden group-hover:-rotate-12 transition-transform"></i>
+        <i class="fa-solid fa-sun text-yellow-400 text-lg hidden dark:block group-hover:rotate-45 transition-transform"></i>
+    </button>
+   <!-- 1. Hero Section -->
+   <section class="pb-12 md:pb-16">
+        
+   <!-- 1. Hero Section -->
+   <section class="pb-12 md:pb-16">
+        
+    <!-- Hero Banner (Full Width without container) -->
+    <div class="w-full mb-12 md:mb-16 reveal relative">
+        <div class="w-full h-[400px] md:h-[400px] bg-slate-200 dark:bg-[#1a202c] relative overflow-hidden shadow-lg group">
+            <div class="absolute inset-0 bg-brand-primary/5 dark:bg-brand-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10"></div>
+            
+            <!-- Website Image -->
+            <img src="images/hero-section-revolve.webp" alt="Revolve Pizza Oven Hero" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
+        </div>
+    </div>
+
+    <!-- Hero Content -->
+    <div class="max-w-4xl mx-auto text-center reveal delay-100 px-6">
+        <div class="inline-flex items-center justify-center gap-2 py-1.5 px-4 rounded-full bg-white/60 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-widest mb-6 backdrop-blur-md mx-auto shadow-sm">
+            Product Management & UX Strategy
+        </div>
+        
+        <h1 class="text-4xl md:text-7xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight mb-6 text-center">
+            Revolve Pizza Oven
+        </h1>
+        
+        <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed text-center">
+            Redesigning project of the Shopify architecture and product page (evolve).
+        </p>
+        
+        <div class="flex flex-wrap justify-center gap-6 md:gap-8 text-sm font-medium text-slate-700 dark:text-slate-300 mb-12 md:mb-16">
+            <div class="flex flex-col items-center">
+                <span class="text-slate-500 uppercase tracking-widest text-xs mb-1">Role</span>
+                <span>Supporting UX & PM Hybrid</span>
+            </div>
+            <div class="hidden md:block w-px h-10 bg-slate-300 dark:bg-white/10"></div>
+            <div class="flex flex-col items-center">
+                <span class="text-slate-500 uppercase tracking-widest text-xs mb-1">Timeline & Team</span>
+                <span>1 Months • 4 Members</span>
+            </div>
+            <div class="hidden md:block w-px h-10 bg-slate-300 dark:bg-white/10"></div>
+            <div class="flex flex-col items-center w-full md:w-auto mt-4 md:mt-0">
+                <span class="text-slate-500 uppercase tracking-widest text-xs mb-1">Key Tools</span>
+                <span>Miro, Shopify, Trello, Monday.com</span>
+            </div>
+        </div>
+
+        <a href="https://revolvepizzaoven.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 px-8 py-4 bg-brand-secondary hover:bg-yellow-500 text-white dark:text-slate-900 font-bold rounded-full transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(219,165,84,0.4)] group">
+            Visit the Website
+            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+        </a>
+    </div>
+</section>
+
+    <!-- 2. The Challenge -->
+    <section class="py-16 md:py-24 px-6 md:px-12 bg-slate-200/50 dark:bg-black/40 transition-colors duration-500">
+        <div class="max-w-6xl mx-auto reveal">
+            
+            <div class="text-center mb-12 md:mb-16">
+                <h2 class="text-sm font-bold tracking-widest text-brand-primary dark:text-brand-secondary uppercase mb-4">The Challenge</h2>
+                <h3 class="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white leading-tight">
+                    Standing out in a <span class="text-brand-primary">saturated market</span>.
+                </h3>
+            </div>
+
+            <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+                
+                <!-- Left: Remaining Text -->
+                <div class="w-full lg:w-1/2 text-left">
+                    <p class="text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
+                        To expand the market, Revolve was launching a new electric model, positioning as a premium, domestic portable oven featuring an innovative smart heating element.
+                    </p>
+                    <p class="text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+                        Because the B2C website serves as Revolve's primary sales channel, we needed to deliberately redesign the digital experience to clearly differentiate our technology.
+                    </p>
+                </div>
+
+                <!-- Right: Market Share Pie Chart & Stats -->
+                <div class="w-full lg:w-1/2">
+                    <div class="bg-white/70 dark:bg-white/5 backdrop-blur-2xl p-6 md:p-8 rounded-[2rem] border border-white/60 dark:border-white/10 shadow-xl flex flex-col sm:flex-row items-center gap-8 hover:-translate-y-1 transition-transform">
+                        
+                        <!-- Pure CSS Pie Chart -->
+                        <div class="relative w-40 h-40 md:w-48 md:h-48 rounded-full shadow-md border-4 border-white dark:border-slate-800 shrink-0" 
+                             style="background: conic-gradient(#346d62 0% 45%, #dba554 45% 70%, #94a3b8 70% 100%);">
+                        </div>
+                        
+                        <!-- Legend & Data -->
+                        <div class="flex flex-col w-full gap-4">
+                            <div>
+                                <h4 class="text-xs md:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-widest mb-3 border-b border-slate-200 dark:border-slate-700 pb-2">Global Market Share</h4>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between items-center text-sm">
+                                        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-brand-primary"></span><span class="text-slate-700 dark:text-slate-300 font-medium">Ooni</span></div>
+                                        <span class="font-bold text-slate-900 dark:text-white">~45%</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-sm">
+                                        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-brand-secondary"></span><span class="text-slate-700 dark:text-slate-300 font-medium">Gozney</span></div>
+                                        <span class="font-bold text-slate-900 dark:text-white">~25%</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-sm">
+                                        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-slate-400"></span><span class="text-slate-700 dark:text-slate-300 font-medium">Others</span></div>
+                                        <span class="font-bold text-slate-900 dark:text-white">30%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Demand Deceleration Stat -->
+                            <div class="bg-red-50 dark:bg-red-500/10 border border-red-100 dark:border-red-500/20 rounded-xl p-3 flex items-center justify-between mt-2">
+                                <span class="text-[10px] md:text-xs font-bold text-red-800 dark:text-red-300 uppercase tracking-wider">Demand Drop</span>
+                                <span class="text-base md:text-lg font-extrabold text-red-600 dark:text-red-400">~15% / yr</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Research & Workshops -->
+    <section class="py-16 md:py-24 px-6 md:px-12">
+        <div class="max-w-5xl mx-auto text-center reveal">
+            <h2 class="text-sm font-bold tracking-widest text-slate-500 uppercase mb-4 text-left">Execution</h2>
+            <h3 class="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-12 md:mb-20 leading-tight text-left">Research & Workshops</h3>
+            
+            <div class="flex flex-col gap-8 md:gap-12 text-left">
+                <!-- Point 1: Data & User Research -->
+                <div class="bg-white/60 dark:bg-white/5 backdrop-blur-2xl p-6 md:p-12 rounded-[2rem] md:rounded-[2.5rem] flex flex-col md:flex-row items-center gap-8 lg:gap-16 border border-white/60 dark:border-white/10 shadow-xl dark:shadow-2xl transition-all duration-300">
+                    <div class="w-full md:w-1/2 bg-slate-100/50 dark:bg-white/5 rounded-[1.5rem] border border-white/50 dark:border-white/10 flex items-center justify-center overflow-hidden min-h-[200px] md:min-h-[250px] relative">
+                        <!-- Image inserted here -->
+                        <img src="images/analysis-shopify-revolve.webp" alt="Shopify Analysis" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <h4 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-4 md:mb-6">Data & User Research</h4>
+                        <div class="text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed space-y-4">
+                            <p><strong>Quantitative Research:</strong> Analysed Shopify and Google Analytics data (traffic sources, cart abandonment rate etc.) to pinpoint user drop-offs.</p>
+                            <p><strong>Qualitative Research:</strong> Launched an incentivized survey on Instagram & Monday.com, offering a €10 voucher to uncover exactly what features pizza lovers prioritize when purchasing their ovens.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Point 2: Miro Workshops -->
+                <div class="bg-white/60 dark:bg-white/5 backdrop-blur-2xl p-6 md:p-12 rounded-[2rem] md:rounded-[2.5rem] flex flex-col md:flex-row-reverse items-center gap-8 lg:gap-16 border border-white/60 dark:border-white/10 shadow-xl dark:shadow-2xl transition-all duration-300">
+                    <div class="w-full md:w-1/2 bg-slate-100/50 dark:bg-white/5 rounded-[1.5rem] border border-white/50 dark:border-white/10 flex items-center justify-center overflow-hidden min-h-[200px] md:min-h-[250px] relative">
+                        <!-- Image inserted here -->
+                        <img src="images/discovery-ws-revolve.webp" alt="Miro Wireframing Workshops" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <h4 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-4 md:mb-6">Miro Wireframing Workshops</h4>
+                        <div class="text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed space-y-4">
+                            <p>Facilitated two crucial workshops with stakeholders:</p>
+                            <p><strong>A Discovery Workshop</strong> to align on core feature priorities based on assumptions and data.</p>
+                            <p><strong>A Prototype Workshop</strong> to visualize the new information architecture and user journey.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Agile Sprint Planning -->
+    <section class="py-16 md:py-24 px-6 md:px-12 bg-slate-200/50 dark:bg-black/40 transition-colors duration-500">
+        <div class="max-w-5xl mx-auto text-center reveal">
+            <h2 class="text-sm font-bold tracking-widest text-brand-primary dark:text-brand-secondary uppercase mb-4">Project Management</h2>
+            <h3 class="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-6 md:mb-8">Agile Sprint Planning</h3>
+            <p class="text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-3xl mx-auto mb-12 md:mb-16">
+                The development phase was a strict 1-month timeline. The team structured the workflow into highly focused 2-week sprints to maintain momentum and ensure quality deliverables.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-left">
+                <div class="bg-white/70 dark:bg-white/5 backdrop-blur-2xl border border-white/60 dark:border-white/10 shadow-xl p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] hover:-translate-y-2 transition-transform">
+                    <div class="w-12 h-12 md:w-14 md:h-14 bg-brand-primary/10 rounded-full flex items-center justify-center mb-4 md:mb-6">
+                        <i class="fa-solid fa-list-check text-brand-primary text-xl md:text-2xl"></i>
+                    </div>
+                    <h4 class="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-3">1. Setting Tasks</h4>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Assigning task for team on Trello, setting priorities, lables, dealdlines, and defining sprint goals.</p>
+                </div>
+
+                <div class="bg-white/70 dark:bg-white/5 backdrop-blur-2xl border border-brand-secondary/40 shadow-xl p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] hover:-translate-y-2 transition-transform relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-b from-brand-secondary/5 to-transparent pointer-events-none"></div>
+                    <div class="w-12 h-12 md:w-14 md:h-14 bg-brand-secondary/10 rounded-full flex items-center justify-center mb-4 md:mb-6 relative z-10">
+                        <i class="fa-solid fa-person-running text-brand-secondary text-xl md:text-2xl"></i>
+                    </div>
+                    <h4 class="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-3 relative z-10">2. One-Week Sprint</h4>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed relative z-10">Intensive one-week development cycles focusing on core Shopify implementations and continuous alignment.</p>
+                </div>
+
+                <div class="bg-white/70 dark:bg-white/5 backdrop-blur-2xl border border-white/60 dark:border-white/10 shadow-xl p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] hover:-translate-y-2 transition-transform">
+                    <div class="w-12 h-12 md:w-14 md:h-14 bg-brand-primary/10 rounded-full flex items-center justify-center mb-4 md:mb-6">
+                        <i class="fa-solid fa-screwdriver-wrench text-brand-primary text-xl md:text-2xl"></i>
+                    </div>
+                    <h4 class="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-3">3. Review & Unblock</h4>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Conducted sprint review sessions, dedicating the following week entirely to clearing blockers and refining QA items.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- 4. Customer Journey Map (Matrix Version) -->
+<section class="py-24 px-6 md:px-12 bg-slate-200/50 dark:bg-[#000000]/20 transition-colors duration-500 overflow-hidden">
+    <div class="max-w-[1200px] mx-auto reveal">
+        <h2 class="text-sm font-bold tracking-widest text-brand-secondary uppercase mb-4 text-center">Design Process</h2>
+        <h3 class="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4 text-center">Customer Journey Map</h3>
+        <h4 class="text-sm text-slate-600 dark:text-slate-400 tracking-tight mb-16 text-center">The journey of people purchasing a new pizza oven online.</h4>
+        
+        <!-- Professional Matrix Map -->
+        <div class="w-full bg-white/70 dark:bg-white/5 backdrop-blur-2xl border border-white/60 dark:border-white/10 shadow-2xl rounded-3xl p-6 md:p-8 overflow-x-auto hide-scroll">
+            <div class="min-w-[1000px] grid grid-cols-[140px_repeat(6,1fr)] border-t border-l border-slate-300 dark:border-white/10 bg-white/50 dark:bg-[#0d1312]/50">
+                
+                <!-- 1. Header Row -->
+                <div class="bg-brand-primary/10 dark:bg-brand-primary/20 border-r border-b border-slate-300 dark:border-white/10 p-4"></div>
+                <div class="bg-brand-primary text-white text-[11px] font-bold uppercase tracking-widest border-r border-b border-brand-primary p-4 flex items-center justify-center text-center">Access</div>
+                <div class="bg-brand-primary text-white text-[11px] font-bold uppercase tracking-widest border-r border-b border-brand-primary p-4 flex items-center justify-center text-center">Consideration 1</div>
+                <div class="bg-brand-primary text-white text-[11px] font-bold uppercase tracking-widest border-r border-b border-brand-primary p-4 flex items-center justify-center text-center">Consideration 2</div>
+                <div class="bg-brand-primary text-white text-[11px] font-bold uppercase tracking-widest border-r border-b border-brand-primary p-4 flex items-center justify-center text-center">Decision</div>
+                <div class="bg-brand-primary text-white text-[11px] font-bold uppercase tracking-widest border-r border-b border-brand-primary p-4 flex items-center justify-center text-center">Purchase</div>
+                <div class="bg-brand-primary text-white text-[11px] font-bold uppercase tracking-widest border-r border-b border-brand-primary p-4 flex items-center justify-center text-center">After-Purchase</div>
+
+                <!-- 2. Customer Activities Row -->
+                <div class="bg-slate-100/80 dark:bg-black/40 font-bold text-[11px] uppercase tracking-wider text-brand-primary dark:text-brand-secondary border-r border-b border-slate-300 dark:border-white/10 p-4 flex items-center">Customer Activities</div>
+                <div class="p-4 border-r border-b border-slate-300 dark:border-white/10 text-xs text-slate-700 dark:text-slate-300">
+                    <ul class="space-y-1.5 list-disc pl-3">
+                        <li>Read recipe blogs</li>
+                        <li>See online searches</li>
+                        <li>Browse social media UGC</li>
+                    </ul>
+                </div>
+                <div class="p-4 border-r border-b border-slate-300 dark:border-white/10 text-xs text-slate-700 dark:text-slate-300">
+                    <ul class="space-y-1.5 list-disc pl-3">
+                        <li>Compare features & evaluate</li>
+                        <li>Find KOL reviews / testimonials</li>
+                    </ul>
+                </div>
+                <div class="p-4 border-r border-b border-slate-300 dark:border-white/10 text-xs text-slate-700 dark:text-slate-300">
+                    <ul class="space-y-1.5 list-disc pl-3">
+                        <li>Discuss with family/partners</li>
+                        <li>Deliberate on features</li>
+                    </ul>
+                </div>
+                <div class="p-4 border-r border-b border-slate-300 dark:border-white/10 text-xs text-slate-700 dark:text-slate-300">
+                    <ul class="space-y-1.5 list-disc pl-3">
+                        <li>Click campaigns or ads</li>
+                        <li>Return to site to avoid missing out</li>
+                    </ul>
+                </div>
+                <div class="p-4 border-r border-b border-slate-300 dark:border-white/10 text-xs text-slate-700 dark:text-slate-300">
+                    <ul class="space-y-1.5 list-disc pl-3">
+                        <li>Add oven to shopping cart</li>
+                        <li>Complete online payment</li>
+                    </ul>
+                </div>
+                <div class="p-4 border-r border-b border-slate-300 dark:border-white/10 text-xs text-slate-700 dark:text-slate-300">
+                    <ul class="space-y-1.5 list-disc pl-3">
+                        <li>Ask about 2-year warranty</li>
+                        <li>Read website FAQs</li>
+                    </ul>
+                </div>
+
+                <!-- 3. Touchpoints Row -->
+                <div class="bg-slate-100/80 dark:bg-black/40 font-bold text-[11px] uppercase tracking-wider text-brand-primary dark:text-brand-secondary border-r border-b border-slate-300 dark:border-white/10 p-4 flex items-center">Touchpoints</div>
+                <div class="p-4 border-r border-b border-slate-300 dark:border-white/10 text-xs text-slate-700 dark:text-slate-300 font-medium space-y-2">
+                    <p><i class="fa-brands fa-google w-4 text-slate-400"></i> Search Engines</p>
+                    <p><i class="fa-solid fa-blog w-4 text-slate-400"></i> Recipe Blogs</p>
+                    <p><i class="fa-brands fa-tiktok w-4 text-slate-400"></i> TikTok / IG</p>
+                </div>
+                <div class="p-4 border-r border-b border-slate-300 dark:border-white/10 text-xs text-slate-700 dark:text-slate-300 font-medium space-y-2">
+                    <p><i class="fa-brands fa-youtube w-4 text-slate-400"></i> YouTube Reviews</p>
+                    <p><i class="fa-brands fa-instagram w-4 text-slate-400"></i> Real User IG</p>
+                </div>
+                <div class="p-4 border-r border-b border-slate-300 dark:border-white/10 text-xs text-slate-700 dark:text-slate-300 font-medium space-y-2">
+                    <p><i class="fa-solid fa-laptop w-4 text-slate-400"></i> Revolve Website</p>
+                    <p><i class="fa-solid fa-list-check w-4 text-slate-400"></i> Features Page</p>
+                </div>
+                <div class="p-4 border-r border-b border-slate-300 dark:border-white/10 text-xs text-slate-700 dark:text-slate-300 font-medium space-y-2">
+                    <p><i class="fa-solid fa-rectangle-ad w-4 text-slate-400"></i> Retargeting Ads</p>
+                    <p><i class="fa-regular fa-envelope w-4 text-slate-400"></i> Promos / Newsletter</p>
+                </div>
+                <div class="p-4 border-r border-b border-slate-300 dark:border-white/10 text-xs text-slate-700 dark:text-slate-300 font-medium space-y-2">
+                    <p><i class="fa-solid fa-cart-shopping w-4 text-slate-400"></i> Website Cart</p>
+                    <p><i class="fa-regular fa-credit-card w-4 text-slate-400"></i> Checkout Gateway</p>
+                </div>
+                <div class="p-4 border-r border-b border-slate-300 dark:border-white/10 text-xs text-slate-700 dark:text-slate-300 font-medium space-y-2">
+                    <p><i class="fa-solid fa-circle-question w-4 text-slate-400"></i> Website FAQ</p>
+                    <p><i class="fa-solid fa-headset w-4 text-slate-400"></i> Customer Support</p>
+                </div>
+
+                <!-- 4. Painpoints Row -->
+                <div class="bg-slate-100/80 dark:bg-black/40 font-bold text-[11px] uppercase tracking-wider text-brand-primary dark:text-brand-secondary border-r border-b border-slate-300 dark:border-white/10 p-4 flex items-center">Painpoints</div>
+                <div class="p-4 border-r border-b border-slate-300 dark:border-white/10 text-xs text-slate-600 dark:text-slate-400 italic">
+                    "Information overload. It's hard to distinguish features between brands initially."
+                </div>
+                <div class="p-4 border-r border-b border-slate-300 dark:border-white/10 text-xs text-slate-600 dark:text-slate-400 italic">
+                    "Confused about Gas vs. Electric and what actually suits my lifestyle best."
+                </div>
+                <div class="p-4 border-r border-b border-slate-300 dark:border-white/10 text-xs text-slate-600 dark:text-slate-400 italic">
+                    "It's a very expensive purchase. Takes time and requires buy-in from my partner."
+                </div>
+                <div class="p-4 border-r border-b border-slate-300 dark:border-white/10 text-xs text-slate-600 dark:text-slate-400 italic">
+                    "Fear of missing out on current discounts, but still holding warranty doubts."
+                </div>
+                <div class="p-4 border-r border-b border-slate-300 dark:border-white/10 text-xs text-slate-600 dark:text-slate-400 italic">
+                    "Fear of hidden shipping fees or hitting a wall during a complex checkout."
+                </div>
+                <div class="p-4 border-r border-b border-slate-300 dark:border-white/10 text-xs text-slate-600 dark:text-slate-400 italic">
+                    "Anxious about potential defects. I need an immediate response if things go wrong."
+                </div>
+
+                <!-- 5. Experience Row -->
+                <div class="bg-slate-100/80 dark:bg-black/40 font-bold text-[11px] uppercase tracking-wider text-brand-primary dark:text-brand-secondary border-r border-b border-slate-300 dark:border-white/10 p-4 flex flex-col justify-center">
+                    <span>Experience</span>
+                </div>
+                <div class="col-span-6 relative flex h-48 border-b border-slate-300 dark:border-white/10">
+                    <!-- SVG Curve -->
+                    <svg class="absolute inset-0 w-full h-full z-0 pointer-events-none drop-shadow-md" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <polyline points="8.33,30 25,75 41.66,50 58.33,25 75,25 91.66,15" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" class="stroke-brand-primary dark:stroke-brand-secondary" />
+                    </svg>
+                    
+                    <!-- Col 1 -->
+                    <div class="flex-1 border-r border-slate-300 dark:border-white/10 relative">
+                        <div class="absolute top-[30%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-slate-800 rounded-full w-8 h-8 flex items-center justify-center text-brand-primary dark:text-brand-secondary text-xl border-2 border-brand-primary dark:border-brand-secondary z-10 shadow-sm">
+                            <i class="fa-solid fa-face-smile"></i>
+                        </div>
+                        <p class="absolute bottom-4 left-0 w-full text-center text-[10px] font-bold text-slate-500 uppercase tracking-wider">Curious</p>
+                    </div>
+                    <!-- Col 2 -->
+                    <div class="flex-1 border-r border-slate-300 dark:border-white/10 relative">
+                        <div class="absolute top-[75%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-slate-800 rounded-full w-8 h-8 flex items-center justify-center text-brand-primary dark:text-brand-secondary text-xl border-2 border-brand-primary dark:border-brand-secondary z-10 shadow-sm">
+                            <i class="fa-solid fa-face-frown"></i>
+                        </div>
+                        <p class="absolute bottom-4 left-0 w-full text-center text-[10px] font-bold text-slate-500 uppercase tracking-wider">Confused</p>
+                    </div>
+                    <!-- Col 3 -->
+                    <div class="flex-1 border-r border-slate-300 dark:border-white/10 relative">
+                        <div class="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-slate-800 rounded-full w-8 h-8 flex items-center justify-center text-brand-primary dark:text-brand-secondary text-xl border-2 border-brand-primary dark:border-brand-secondary z-10 shadow-sm">
+                            <i class="fa-solid fa-face-meh"></i>
+                        </div>
+                        <p class="absolute bottom-4 left-0 w-full text-center text-[10px] font-bold text-slate-500 uppercase tracking-wider">Deliberate</p>
+                    </div>
+                    <!-- Col 4 -->
+                    <div class="flex-1 border-r border-slate-300 dark:border-white/10 relative">
+                        <div class="absolute top-[25%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-slate-800 rounded-full w-8 h-8 flex items-center justify-center text-brand-primary dark:text-brand-secondary text-xl border-2 border-brand-primary dark:border-brand-secondary z-10 shadow-sm">
+                            <i class="fa-solid fa-face-smile-beam"></i>
+                        </div>
+                        <p class="absolute bottom-4 left-0 w-full text-center text-[10px] font-bold text-slate-500 uppercase tracking-wider">Excited</p>
+                    </div>
+                    <!-- Col 5 -->
+                    <div class="flex-1 border-r border-slate-300 dark:border-white/10 relative">
+                        <div class="absolute top-[25%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-slate-800 rounded-full w-8 h-8 flex items-center justify-center text-brand-primary dark:text-brand-secondary text-xl border-2 border-brand-primary dark:border-brand-secondary z-10 shadow-sm">
+                            <i class="fa-solid fa-face-grin-stars"></i>
+                        </div>
+                        <p class="absolute bottom-4 left-0 w-full text-center text-[10px] font-bold text-slate-500 uppercase tracking-wider">Excited</p>
+                    </div>
+                    <!-- Col 6 -->
+                    <div class="flex-1 border-r border-slate-300 dark:border-white/10 relative">
+                        <div class="absolute top-[15%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-slate-800 rounded-full w-8 h-8 flex items-center justify-center text-brand-primary dark:text-brand-secondary text-xl border-2 border-brand-primary dark:border-brand-secondary z-10 shadow-sm">
+                            <i class="fa-solid fa-face-grin-hearts"></i>
+                        </div>
+                        <p class="absolute bottom-4 left-0 w-full text-center text-[10px] font-bold text-slate-500 uppercase tracking-wider">Satisfied</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+            
+         <!-- Homepage Information Hierarchy Wireframe -->
+<div class="pt-12 pb-8">
+    <h4 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-10 text-center tracking-tight">Example: Homepage Information Hierarchy</h4>
+    
+    <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        
+        <!-- Left: Wireframe (Compact Version) -->
+        <div class="bg-white/80 dark:bg-slate-800/40 backdrop-blur-2xl border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-4 relative max-w-sm mx-auto w-full shadow-xl dark:shadow-[0_20px_40px_rgba(0,0,0,0.4)]">
+            <!-- Mobile Speaker Notch -->
+            <div class="w-16 md:w-20 h-1.5 bg-slate-300 dark:bg-white/20 rounded-full mx-auto mb-4 mt-1"></div>
+            
+            <!-- Wireframe Blocks -->
+            <div class="flex flex-col gap-3">
+                
+                <!-- Block 1 -->
+                <div class="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:border-purple-400 dark:hover:bg-white/10 transition-colors rounded-xl p-3 flex flex-col items-center justify-center min-h-[70px] shadow-sm">
+                    <h5 class="font-bold text-slate-800 dark:text-white text-sm md:text-base text-center leading-snug">1. Nav Bar & Hero Section</h5>
+                </div>
+
+                <!-- Block 2 -->
+                <div class="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:border-purple-400 dark:hover:bg-white/10 transition-colors rounded-xl p-3 flex flex-col items-center justify-center min-h-[60px] shadow-sm">
+                    <h5 class="font-bold text-slate-800 dark:text-white text-sm md:text-base">2. Oven Products</h5>
+                </div>
+
+                <!-- Block 3 -->
+                <div class="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:border-purple-400 dark:hover:bg-white/10 transition-colors rounded-xl p-3 flex flex-col items-center justify-center min-h-[60px] shadow-sm">
+                    <h5 class="font-bold text-slate-800 dark:text-white text-sm md:text-base">3. Social Proof</h5>
+                </div>
+
+                <!-- Block 4 -->
+                <div class="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:border-purple-400 dark:hover:bg-white/10 transition-colors rounded-xl p-3 flex flex-col items-center justify-center min-h-[60px] shadow-sm">
+                    <h5 class="font-bold text-slate-800 dark:text-white text-sm md:text-base">4. Features Highlights</h5>
+                </div>
+
+                <!-- Block 5 -->
+                <div class="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:border-purple-400 dark:hover:bg-white/10 transition-colors rounded-xl p-3 flex flex-col items-center justify-center min-h-[60px] shadow-sm">
+                    <h5 class="font-bold text-slate-800 dark:text-white text-sm md:text-base">5. Revolve Accessories</h5>
+                </div>
+
+                <!-- Block 6 -->
+                <div class="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:border-purple-400 dark:hover:bg-white/10 transition-colors rounded-xl p-3 flex flex-col items-center justify-center min-h-[60px] shadow-sm">
+                    <h5 class="font-bold text-slate-800 dark:text-white text-sm md:text-base text-center leading-tight">6. Revolve Academy<br><span class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-normal">(Maintenance & Recipes)</span></h5>
+                </div>
+
+                <!-- Block 7 -->
+                <div class="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:border-purple-400 dark:hover:bg-white/10 transition-colors rounded-xl p-3 flex flex-col items-center justify-center min-h-[60px] shadow-sm">
+                    <h5 class="font-bold text-slate-800 dark:text-white text-sm md:text-base text-center leading-tight">7. Revolve Community<br><span class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 font-normal">(UGC & IG Content)</span></h5>
+                </div>
+
+                <!-- Block 8 -->
+                <div class="bg-slate-100 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 rounded-xl p-2 flex flex-col items-center justify-center min-h-[48px]">
+                    <h5 class="font-bold text-slate-500 text-xs md:text-sm">8. Footer</h5>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Right: Rationales (The 3 Statements) -->
+        <div class="flex flex-col gap-6">
+            
+            <!-- Statement 1 -->
+            <div class="bg-white dark:bg-white/5 p-6 md:p-8 rounded-[1.5rem] border border-slate-100 dark:border-white/10 shadow-lg dark:shadow-none hover:-translate-y-1 transition-transform duration-300">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-12 h-12 bg-purple-100 dark:bg-brand-purple/20 rounded-full flex items-center justify-center shrink-0 border border-purple-200 dark:border-brand-purple/30">
+                        <i class="fa-solid fa-magnifying-glass-chart text-purple-600 dark:text-purple-400 text-lg"></i>
+                    </div>
+                    <h4 class="text-lg md:text-xl font-bold text-slate-900 dark:text-white">Lifestyle & Community Driven</h4>
+                </div>
+                <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                    <strong class="text-slate-900 dark:text-slate-200">78%</strong> of our target audience prioritizes a "family-oriented" and "community-based" cooking lifestyle. The hierarchy reflects this by emphasizing emotional hero imagery and UGC community blocks.
+                </p>
+            </div>
+
+            <!-- Statement 2 -->
+            <div class="bg-white dark:bg-white/5 p-6 md:p-8 rounded-[1.5rem] border border-slate-100 dark:border-white/10 shadow-lg dark:shadow-none hover:-translate-y-1 transition-transform duration-300">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-12 h-12 bg-purple-100 dark:bg-brand-purple/20 rounded-full flex items-center justify-center shrink-0 border border-purple-200 dark:border-brand-purple/30">
+                        <i class="fa-solid fa-shield-halved text-purple-600 dark:text-purple-400 text-lg"></i>
+                    </div>
+                    <h4 class="text-lg md:text-xl font-bold text-slate-900 dark:text-white">Credibility for High-Ticket Items</h4>
+                </div>
+                <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                     Premium pizza ovens represent a significant financial investment - Positioning authoritative "Social Proof" below the products establishes immediate credibility before users scroll away.
+                </p>
+            </div>
+
+            <!-- Statement 3 -->
+            <div class="bg-white dark:bg-white/5 p-6 md:p-8 rounded-[1.5rem] border border-slate-100 dark:border-white/10 shadow-lg dark:shadow-none hover:-translate-y-1 transition-transform duration-300">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-12 h-12 bg-purple-100 dark:bg-brand-purple/20 rounded-full flex items-center justify-center shrink-0 border border-purple-200 dark:border-brand-purple/30">
+                        <i class="fa-solid fa-rotate text-purple-600 dark:text-purple-400 text-lg"></i>
+                    </div>
+                    <h4 class="text-lg md:text-xl font-bold text-slate-900 dark:text-white">Ecosystem Cross-Selling</h4>
+                </div>
+                <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                   Integrated Revolve Accessories and Revolve Academy towards the footer, the site seamlessly transitions from a one-time product pitch into an ongoing ecosystem.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+    <!-- 6. Critical Path & Risk Management -->
+    <section class="py-16 md:py-24 px-6 md:px-12 bg-slate-300/30 dark:bg-[#000000]/40 transition-colors duration-500 border-t border-slate-300/50 dark:border-white/5">
+        <div class="max-w-5xl mx-auto reveal">
+            <h2 class="text-sm font-bold tracking-widest text-brand-primary dark:text-brand-secondary uppercase mb-4 text-center">Risk Management</h2>
+            <h3 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-12 md:mb-16 text-center">Critical Path Blockers & Solutions</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 mb-10 md:mb-12">
+                
+                <!-- Blocker 01: Alignment & Communication -->
+                <div class="bg-white/70 dark:bg-white/5 backdrop-blur-2xl p-6 md:p-10 rounded-[2rem] border border-white/60 dark:border-white/10 shadow-xl flex flex-col h-full">
+                    <div class="flex items-center gap-4 mb-6">
+                        <span class="text-red-500 bg-red-500/10 w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center text-lg md:text-xl font-bold"><i class="fa-solid fa-triangle-exclamation"></i></span>
+                        <h4 class="text-xl font-bold text-slate-900 dark:text-white">Alignment Drift</h4>
+                    </div>
+                    <p class="text-sm md:text-base text-slate-600 dark:text-slate-400 mb-6 flex-grow leading-relaxed">
+                        Many project details were communicated on Slack without definitive conclusions, which led to misaligned expectations and caused us to waste critical development hours in repetitive alignment meetings.
+                    </p>
+                    <div class="bg-slate-100/50 dark:bg-white/5 p-5 rounded-2xl border-l-4 border-l-brand-primary mt-auto">
+                        <p class="text-xs md:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                            <strong class="text-brand-primary dark:text-brand-secondary"> PM Solution:</strong> The team established a "Agenda-and-Outcome" meeting guideline and migrated all action items from Slack into a centralized Decision Log on Trello to restore clarity and velocity.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Blocker 02: Technical Dependency -->
+                <div class="bg-white/70 dark:bg-white/5 backdrop-blur-2xl p-6 md:p-10 rounded-[2rem] border border-white/60 dark:border-white/10 shadow-xl flex flex-col h-full">
+                    <div class="flex items-center gap-4 mb-6">
+                        <span class="text-orange-500 bg-orange-500/10 w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center text-lg md:text-xl font-bold"><i class="fa-solid fa-link-slash"></i></span>
+                        <h4 class="text-xl font-bold text-slate-900 dark:text-white">Blocker 02: Asset Pipeline</h4>
+                    </div>
+                    <p class="text-sm md:text-base text-slate-600 dark:text-slate-400 mb-6 flex-grow leading-relaxed">
+                        <strong>The Situation:</strong> Delayed 3D renders stalled front-end development, risking a milestone delay.
+                    </p>
+                    <div class="bg-slate-100/50 dark:bg-white/5 p-5 rounded-2xl border-l-4 border-l-brand-primary mt-auto">
+                        <p class="text-xs md:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                            <strong class="text-brand-primary dark:text-brand-secondary">UX Solution:</strong> Designed structural placeholders, allowing developers to code independently of the delayed media assets.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Retrospective Insight -->
+            <div class="bg-brand-primary text-white p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] shadow-lg flex items-center gap-5 md:gap-6 relative overflow-hidden group">
+                <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4xNSkiLz48L3N2Zz4=')] opacity-50"></div>
+                <div class="w-12 h-12 md:w-16 md:h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center shrink-0 z-10">
+                    <i class="fa-solid fa-brain text-2xl md:text-3xl"></i>
+                </div>
+                <div class="z-10">
+                    <h4 class="text-lg md:text-xl font-bold mb-2">Retrospective Takeaway</h4>
+                    <p class="text-sm md:text-base text-brand-primary-50 text-white/90 leading-relaxed">
+                        I've found that proactive dependency mapping is just as critical as UX wireframing. By establishing centralized communication protocols and building decoupled architectural structures, I can ensure my projects maintain momentum even when external blockers occur.
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 7. Results & Impact -->
+    <section class="py-16 md:py-24 px-6 md:px-12 bg-slate-200/50 dark:bg-[#000000]/60 border-t border-slate-300 dark:border-white/5 relative overflow-hidden transition-colors duration-500">
+        <div class="max-w-5xl mx-auto relative z-10 reveal">
+            <h2 class="text-sm font-bold tracking-widest text-slate-500 uppercase mb-4 text-center">Business Impact</h2>
+            <h3 class="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-12 md:mb-20 text-center tracking-tight">Project Outcomes</h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                
+                <!-- Metric 1: Cart Dropoff -->
+                <div class="bg-white/70 dark:bg-white/5 backdrop-blur-2xl border border-white/60 dark:border-white/10 shadow-xl p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] text-center flex flex-col justify-center hover:-translate-y-2 transition-all duration-300">
+                    <div class="text-5xl md:text-6xl font-extrabold text-slate-900 dark:text-white mb-4">-33.5%</div>
+                    <p class="text-sm md:text-base text-slate-600 dark:text-slate-400 font-medium">Reduction in cart drop-off rate 3 months post-launch</p>
+                </div>
+                
+                <!-- Metric 2: Conversion Rate (Highlighted) -->
+                <div class="bg-white/70 dark:bg-white/5 backdrop-blur-2xl border border-brand-secondary/40 shadow-xl p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] text-center flex flex-col justify-center relative overflow-hidden hover:-translate-y-2 transition-all duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-b from-brand-secondary/10 to-transparent pointer-events-none"></div>
+                    <div class="text-brand-secondary font-bold mb-3 md:mb-4 relative z-10 text-xs uppercase tracking-widest">Exceeded Goal</div>
+                    <div class="text-5xl md:text-6xl font-extrabold text-slate-900 dark:text-white mb-3 md:mb-4 relative z-10">0.27%</div>
+                    <p class="text-xs md:text-sm text-slate-900 dark:text-white font-semibold relative z-10 bg-brand-secondary/20 inline-block mx-auto px-4 py-1.5 rounded-full">Conversion rate (Target: 0.2%)</p>
+                </div>
+
+                <!-- Metric 3: CTR & Retention -->
+                <div class="bg-white/70 dark:bg-white/5 backdrop-blur-2xl border border-white/60 dark:border-white/10 shadow-xl p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] text-center flex flex-col justify-center hover:-translate-y-2 transition-all duration-300">
+                    <div class="text-5xl md:text-6xl font-extrabold text-slate-900 dark:text-white mb-4">+45%</div>
+                    <p class="text-sm md:text-base text-slate-600 dark:text-slate-400 font-medium">Increase in product page CTR and session retention</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. What's Next -->
+    <section class="py-16 md:py-20 px-6 md:px-12 border-t border-slate-300 dark:border-white/5 relative overflow-hidden transition-colors duration-500">
+        <div class="max-w-4xl mx-auto text-center reveal">
+            <h2 class="text-sm font-bold tracking-widest text-brand-primary dark:text-brand-secondary uppercase mb-4 md:mb-6">What's Next</h2>
+            <h3 class="text-2xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4 md:mb-6">Haloo Brands B2B Website Redesign</h3>
+            <p class="text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed mb-6 md:mb-8 max-w-2xl mx-auto">
+                Driving B2B e-commerce growth through a comprehensive website revamp, strategic brand positioning, and targeted marketing campaigns.
+            </p>
+            <a href="#" class="inline-flex items-center gap-2 text-brand-primary dark:text-brand-secondary font-bold hover:underline">
+                View Next Case Study <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script>
+        // Scroll Animations
+        const scrollObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        
+        document.querySelectorAll('.reveal').forEach(el => scrollObserver.observe(el));
+
+        // Theme Toggle Function
+        function toggleTheme() {
+            const htmlElement = document.documentElement;
+            htmlElement.classList.toggle('dark');
+            
+            if (htmlElement.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Information Hierarchy Modal Logic
+        const ihData = {
+            'nav-hero': {
+                title: '1. Nav Bar & Hero Section',
+                text: '<strong>Rationale:</strong> A parallel and intuitive navigation design allows users to self-route based on their needs (finding ovens, buying accessories, or learning to make pizza) within 3 seconds. The immersive lifestyle hero image and strong Value Proposition immediately capture visitors\' attention and establish a premium brand feel.'
+            },
+            'products': {
+                title: '2. Oven Products',
+                text: '<strong>Rationale:</strong> Showcasing the latest flagship electric model alongside the classic gas model directly caters to buyers with different usage habits. Using contrast and precise CTAs (Order Now) effectively shortens the conversion path from browsing to purchasing.'
+            },
+            'social': {
+                title: '3. Social Proof',
+                text: '<strong>Rationale:</strong> Leveraging 5-star reviews from authoritative media (like T3 Magazine, BBC Good Food) and endorsements from professional chefs instantly eliminates the hesitation period for high-ticket kitchenware buyers, establishing immediate trust.'
+            },
+            'features': {
+                title: '4. Features Highlights',
+                text: '<strong>Rationale:</strong> Front-loading the pain points users care about most—"preventing burnt crusts" and "professional-level performance." Highlighting feature modules like the "Rotating Stone" and "AVPN Certification" intuitively proves the product\'s irreplaceable advantages.'
+            },
+            'accessories': {
+                title: '5. Revolve Accessories',
+                text: '<strong>Rationale:</strong> Displaying official accessories smoothly guides main-oven buyers into cross-selling options. This not only enriches the user\'s cooking experience but also effectively increases the Average Order Value (AOV).'
+            },
+            'academy': {
+                title: '6. Revolve Academy',
+                text: '<strong>Rationale:</strong> Capturing search traffic (SEO) through educational maintenance guides and recipe blogs. This converts exploring visitors into highly engaged community members, extending the overall customer lifetime value.'
+            },
+            'community': {
+                title: '7. Revolve Community',
+                text: '<strong>Rationale:</strong> Shaping an authentic, vibrant community atmosphere. Utilizing real User-Generated Content (UGC) and lifestyle photos from Instagram further strengthens potential buyers\' desire and purchasing confidence.'
+            },
+            'footer': {
+                title: '8. Footer',
+                text: '<strong>Rationale:</strong> Providing complete compliance information, a 2-year warranty guarantee, and support portals. This serves as the crucial final anchor for rational buyers seeking security and policy clarification right before placing an order.'
+            }
+        };
+
+        const modal = document.getElementById('ih-modal');
+        const modalContent = document.getElementById('ih-modal-content');
+        const modalTitle = document.getElementById('ih-modal-title');
+        const modalText = document.getElementById('ih-modal-text');
+        
+        let hoverTimeout;
+
+        function openIhModal(key) {
+            clearTimeout(hoverTimeout);
+            const data = ihData[key];
+            if(data) {
+                modalTitle.innerHTML = data.title;
+                modalText.innerHTML = data.text;
+                
+                // Show modal
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                
+                // Trigger animation
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    modalContent.classList.remove('scale-95');
+                    modalContent.classList.add('scale-100');
+                }, 10);
+            }
+        }
+
+        function closeIhModal(event) {
+            // If event is passed (click), only close if clicked outside the content block
+            if (event && event.type === 'click' && event.target !== modal && !event.target.closest('button')) {
+                return; 
+            }
+
+            // Animate out
+            modal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            
+            // Hide after animation
+            hoverTimeout = setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        }
+    </script>
+</body>
+</html>
